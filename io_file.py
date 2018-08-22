@@ -93,7 +93,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
             if row[rows_in_set["row_surv"]] != "Survived":
                 answerSet.append(int(row[rows_in_set["row_surv"]]))
 
-        row = row[rows_in_set["row_pclass"]] + row[rows_in_set["row_sex"]:rows_in_set["row_ticket"]] + row[rows_in_set["row_Fare"]:]
+        row = list(row[rows_in_set["row_pclass"]]) + row[rows_in_set["row_sex"]:rows_in_set["row_ticket"]] + row[rows_in_set["row_Fare"]:]
 
         for i, r in enumerate(row):
             if r == '':
