@@ -1,8 +1,6 @@
 import csv
 
-class io_csvfile:
-
-    def _data_reader(self, file_obj):
+def _data_reader(self, file_obj):
         reader = csv.reader(file_obj)
         dataSet = []
 
@@ -58,17 +56,15 @@ class io_csvfile:
         answerSet_test = np.array(answerSet[trainSet_size:])
         answerSet_test = answerSet_test.reshape(len(answerSet_test), 1)
 
-    def read_csvfile(self, csv_path):
-        with open(csv_path, "r") as f_obj:
-            self.data_reader(f_obj)
+def read_csvfile(self, csv_path):
+    with open(csv_path, "r") as f_obj:
+        self.data_reader(f_obj)
 
-        pass
+def write_csvfile(self,file_name):
+    pass
 
-    def write_csvfile(self,file_name):
-        pass
+def preprocessing(self): # this function is made exclusively for task
+    pass
 
-    def preprocessing(self): # this function is made exclusively for task
-        pass
-
-    def postprocessing(self): # this function is made exclusively for task
-        pass
+def postprocessing(self): # this function is made exclusively for task
+    pass
