@@ -1,4 +1,4 @@
-import read_file as rf
+import io_file as ifile
 import numpy as np
 import csv
 import math
@@ -84,17 +84,6 @@ class LogisticRegressionModel:
                 res[0, i] = 0
 
         return y.size - np.sum(np.abs(res.transpose() - y))
-
-    def __change_sym(self,sym):
-        dict = {
-            "male" : '0',
-            "female": '1',
-            "C": '0',
-            "Q": '1',
-            "S": '2',
-            "" : '0' #TODO: this line isn't good
-        }
-        return dict.get(sym)
 
     def data_reader(self, file_obj):
         reader = csv.reader(file_obj)

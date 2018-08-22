@@ -32,35 +32,34 @@ def change_sym(sym):
 
 
 def match_rows(row):
-    global row_p_id, row_surv, row_pclass, row_name, row_sex, row_age
-    global row_Sib, row_Parch, row_ticket, row_Fare, row_Cabin, row_Embar
+    rows_in_set = {}
 
     for i,r in enumerate(row):
         if r == "PassengerId":
-            row_p_id = i
+            rows_in_set['row_p_id'] = i
         elif r == "Survived":
-            row_surv = i
+            rows_in_set['row_surv'] = i
         elif r == "Pclass":
-            row_pclass = i
+            rows_in_set['row_pclass'] = i
         elif r == "Name":
-            row_name = i
+            rows_in_set['row_name'] = i
         elif r == "Sex":
-            row_sex = i
+            rows_in_set['row_sex'] = i
         elif r == "Age":
-            row_age = i
+            rows_in_set['row_age'] = i
         elif r == "SibSp":
-            row_Sib = i
+            rows_in_set['row_Sib'] = i
         elif r == "Parch":
-            row_Parch = i
+            rows_in_set['row_Parch'] = i
         elif r == "Ticket":
-            row_ticket = i
+            rows_in_set['row_ticket'] = i
         elif r == "Fare":
-            row_Fare = i
+            rows_in_set['row_Fare'] = i
         elif r == "Cabin":
-            row_Cabin = i
+            rows_in_set['row_Cabin'] = i
         elif r == "Embarked":
-            row_Embar = i
-
+            rows_in_set['row_Embar'] = i
+    return rows_in_set
 
 def preprocessing(reader, arg): # this function is made exclusively for task
 
@@ -76,14 +75,13 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     row = []
 
     # correct all misses in data and cut answerSet
-    row_p_id, row_surv, row_pclass, row_name, row_sex, row_age = None
-    row_Sib, row_Parch, row_ticket, row_Fare, row_Cabin, row_Embar = None
+    rows_in_set = {}
 
     first_row = True
 
     for row in reader:
         if first_row:
-            match_rows(row)
+            rows_in_set = match_rows(row)
             first_row = False
 
         row[row_sex] = change_sym(row[row_sex])
