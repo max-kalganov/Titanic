@@ -1,3 +1,4 @@
 import io_file as f
 
-f.read_csvfile('train.csv', 'c')
+a = f.read_csvfile('train.csv', 'c')
+print (a)

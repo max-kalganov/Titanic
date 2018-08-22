@@ -1,3 +1,4 @@
+import math
 import csv
 import numpy as np
 
@@ -130,12 +131,12 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         answerSet_test = np.array(answerSet[trainSet_size:])
         answerSet_test = answerSet_test.reshape(len(answerSet_test), 1)
 
-        return trainSet, answerSet_train, testSet, answerSet_test
+        return trainSet.astype(float), answerSet_train.astype(float), testSet.astype(float), answerSet_test.astype(float)
 
     elif arg == "tf":
-        return trainSet, answerSet_train
+        return trainSet.astype(float), answerSet_train.astype(float)
     else:
-        return tuple(trainSet)
+        return trainSet.astype(float)
 
 
 def postprocessing(person_id, answer): # this function is made exclusively for task
