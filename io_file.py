@@ -113,16 +113,24 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         trainSet_size = int(0.7 * set_size)
     trainSet = np.matrix(dataSet[:trainSet_size])
     trainSet = trainSet.transpose()
-    answerSet_train = np.array(answerSet[:trainSet_size])
-    answerSet_train = answerSet_train.reshape(len(answerSet_train), 1)
 
-    if arg == "t"
-    testSet = np.matrix(dataSet[trainSet_size:])
-    testSet = testSet.transpose()
+    if arg == "t" or arg == "tf":
+        answerSet_train = np.array(answerSet[:trainSet_size])
+        answerSet_train = answerSet_train.reshape(len(answerSet_train), 1)
 
+    if arg == "t":
+        testSet = np.matrix(dataSet[trainSet_size:])
+        testSet = testSet.transpose()
 
-    answerSet_test = np.array(answerSet[trainSet_size:])
-    answerSet_test = answerSet_test.reshape(len(answerSet_test), 1)
+        answerSet_test = np.array(answerSet[trainSet_size:])
+        answerSet_test = answerSet_test.reshape(len(answerSet_test), 1)
+
+        return tuple(trainSet, answerSet_train, testSet, answerSet_test)
+
+    elif arg == "tf":
+        return tuple(trainSet, answerSet_train)
+    else:
+        return tuple(trainSet)
 
 
 def postprocessing(): # this function is made exclusively for task
