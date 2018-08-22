@@ -11,8 +11,12 @@ def read_csvfile(csv_path, arg):
     return ans
 
 
-def write_csvfile(file_name):
-    pass
+def write_csvfile(person_id, answer, path):
+    data = postprocessing(person_id, answer)
+    with open(path, "w", newline='') as csv_file:
+        writer = csv.writer(csv_file, delimiter=',')
+        for line in data:
+            writer.writerow(line)
 
 
 def change_sym(sym):
@@ -133,5 +137,10 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         return tuple(trainSet)
 
 
-def postprocessing(): # this function is made exclusively for task
-    pass
+def postprocessing(person_id, answer): # this function is made exclusively for task
+    person_id = person_id.astype(str)
+    answer = answer.astype(str)
+    person_id = np.insert(person_id, 0, "PassengerId")
+    answer = np.insert(answer, 0, "Survived")
+    data = np.row_stack((person_id, answer))
+    return data.transpose()
