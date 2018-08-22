@@ -41,11 +41,11 @@ class LogisticRegressionModel:
         grad = 1/m * np.dot(x, self.h(x).transpose() - y)
         # TODO : here we can use reguralization  "+ lambda/m * theta"
 
-        return self.theta - self.alpha * grad
+        return self.theta - self.__alpha * grad
 
     def cost(self, x, y):
         m = len(y)
-        prob = self.h(self.theta, x)
+        prob = self.h(x)
 
         self.__remove_zeros_from_prob(prob)
 

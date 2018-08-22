@@ -62,6 +62,7 @@ def match_rows(row):
             rows_in_set['row_Embar'] = i
     return rows_in_set
 
+
 def preprocessing(reader, arg): # this function is made exclusively for task
 
     # creating variables
@@ -141,9 +142,11 @@ def preprocessing(reader, arg): # this function is made exclusively for task
 
 
 def postprocessing(person_id, answer): # this function is made exclusively for task
-    person_id = person_id.astype(str)
+    print(person_id)
+    print(answer)
+    #person_id = person_id.astype(str)
     answer = answer.astype(str)
-    person_id = np.insert(person_id, 0, "PassengerId")
+    #person_id = np.insert(person_id, 0, "PassengerId")
     answer = np.insert(answer, 0, "Survived")
     data = np.row_stack((person_id, answer))
     return data.transpose()
