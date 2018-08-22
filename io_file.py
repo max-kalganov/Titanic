@@ -93,7 +93,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
             if row[rows_in_set["row_surv"]] != "Survived":
                 answerSet.append(int(row[rows_in_set["row_surv"]]))
 
-        row = list(row[rows_in_set["row_pclass"]]) + row[rows_in_set["row_sex"]:rows_in_set["row_ticket"]] + row[rows_in_set["row_Fare"]:]
+        row = [row[rows_in_set["row_pclass"]]] + row[rows_in_set["row_sex"]:rows_in_set["row_ticket"]] + row[rows_in_set["row_Fare"]:]
 
         for i, r in enumerate(row):
             if r == '':
@@ -108,7 +108,10 @@ def preprocessing(reader, arg): # this function is made exclusively for task
 
     set_size = length
 
-    trainSet, testSet = None
+    trainSet = None
+    testSet = None
+    answerSet_train = None
+    answerSet_test = None
 
     trainSet_size = set_size
     if arg == "t":
@@ -127,10 +130,10 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         answerSet_test = np.array(answerSet[trainSet_size:])
         answerSet_test = answerSet_test.reshape(len(answerSet_test), 1)
 
-        return tuple(trainSet, answerSet_train, testSet, answerSet_test)
+        return trainSet, answerSet_train, testSet, answerSet_test
 
     elif arg == "tf":
-        return tuple(trainSet, answerSet_train)
+        return trainSet, answerSet_train
     else:
         return tuple(trainSet)
 
