@@ -102,7 +102,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         dataSet.append(row)
 
     width = len(dataSet[rows_in_set["row_p_id"]])
-    dataSet.pop(rows_in_set["row_p_id"])
+    p_id = dataSet.pop(rows_in_set["row_p_id"])
 
     length = len(dataSet)
     dataSet = np.reshape(dataSet, (length, width))
@@ -136,7 +136,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     elif arg == "tf":
         return trainSet.astype(float), answerSet_train.astype(float)
     else:
-        return trainSet.astype(float)
+        return trainSet.astype(float), p_id
 
 
 def postprocessing(person_id, answer): # this function is made exclusively for task
