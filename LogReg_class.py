@@ -1,3 +1,4 @@
+import read_file as rf
 import numpy as np
 import csv
 import math
@@ -72,7 +73,6 @@ class LogisticRegressionModel:
         print("theta = \n",theta)
         print("J = ", self.cost(theta, x, y))
         print("num of iterations = ",i)
-
 
     def check_correction(self,theta,x,y):
         res =  self.h(theta,x)
@@ -154,10 +154,14 @@ class LogisticRegressionModel:
 
     def run_train(self):
         if __name__ == "__main__":
-            csv_path = "train.csv"
 
+            # TODO: change this part
+            csv_path = "train.csv"
             with open(csv_path, "r") as f_obj:
                 self.data_reader(f_obj)
+
+
+
 
             print("set_size = ",set_size," num_of_param = ",num_of_param)
 
@@ -171,5 +175,5 @@ class LogisticRegressionModel:
 
 
 
-train_obj = LogisticRegressionModel()
-train_obj.run_train()
+#train_obj = LogisticRegressionModel()
+#train_obj.run_train()

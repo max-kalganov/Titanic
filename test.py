@@ -1,4 +1,4 @@
-import main as m
+import LogReg_class as m
 import numpy as np
 import csv
 
