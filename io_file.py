@@ -84,24 +84,24 @@ def preprocessing(reader, arg): # this function is made exclusively for task
             rows_in_set = match_rows(row)
             first_row = False
 
-        row[row_sex] = change_sym(row[row_sex])
-        row[row_Embar] = change_sym(row[row_Embar])
+        row[rows_in_set["row_sex"]] = change_sym(row[rows_in_set["row_sex"]])
+        row[rows_in_set["row_Embar"]] = change_sym(row[rows_in_set["row_Embar"]])
 
-        row.pop(row_Cabin)
+        row.pop(rows_in_set["row_Cabin"])
 
         if arg == "t" or arg == "tf":
-            if row[row_surv] != "Survived":
-                answerSet.append(int(row[row_surv]))
+            if row[rows_in_set["row_surv"]] != "Survived":
+                answerSet.append(int(row[rows_in_set["row_surv"]]))
 
-        row = row[row_pclass] + row[row_sex:row_ticket] + row[row_Fare:]
+        row = row[rows_in_set["row_pclass"]] + row[rows_in_set["row_sex"]:rows_in_set["row_ticket"]] + row[rows_in_set["row_Fare"]:]
 
         for i, r in enumerate(row):
             if r == '':
                 row[i] = '0'  # TODO: change this line
         dataSet.append(row)
 
-    width = len(dataSet[row_p_id])
-    dataSet.pop(row_p_id)
+    width = len(dataSet[rows_in_set["row_p_id"]])
+    dataSet.pop(rows_in_set["row_p_id"])
 
     length = len(dataSet)
     dataSet = np.reshape(dataSet, (length, width))
