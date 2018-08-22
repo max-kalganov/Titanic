@@ -79,6 +79,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     rows_in_set = {}
 
     first_row = True
+    p_id = []
 
     for row in reader:
         if first_row:
@@ -93,7 +94,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         if arg == "t" or arg == "tf":
             if row[rows_in_set["row_surv"]] != "Survived":
                 answerSet.append(int(row[rows_in_set["row_surv"]]))
-
+        p_id.append(row[rows_in_set["row_p_id"]])
         row = [row[rows_in_set["row_pclass"]]] + row[rows_in_set["row_sex"]:rows_in_set["row_ticket"]] + row[rows_in_set["row_Fare"]:]
 
         for i, r in enumerate(row):
@@ -102,7 +103,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         dataSet.append(row)
 
     width = len(dataSet[rows_in_set["row_p_id"]])
-    p_id = dataSet.pop(rows_in_set["row_p_id"])
+    dataSet.pop(rows_in_set["row_p_id"])
 
     length = len(dataSet)
     dataSet = np.reshape(dataSet, (length, width))
