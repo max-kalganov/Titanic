@@ -12,7 +12,7 @@ class LogisticRegressionModel:
 
     theta = []                  # the coefficients of the model
     __alpha = 0.001
-    __border = 0.3
+    __border = 0.9
     num_of_param = None
     set_size = 0
 
@@ -22,7 +22,6 @@ class LogisticRegressionModel:
     def get_alpha(self):
         return self.__alpha
 
-    # Warning!! .Было преобразование типа  x = x.astype(float)
     def h(self, x):
         return self.g(np.dot(self.theta.transpose(), x))
 
@@ -38,7 +37,6 @@ class LogisticRegressionModel:
 
     def grad_desc(self, x, y):
         m = y.size
-        # Warning!! .Было преобразование типа  x = x.astype(float)
         grad = 1/m * np.dot(x, self.h(x).transpose() - y)
         # TODO : here we can use reguralization  "+ lambda/m * theta"
 
@@ -58,8 +56,8 @@ class LogisticRegressionModel:
         for i, c in enumerate(cost1.transpose()):
             if math.isnan(c):
                 cost1[0, i] = 0
-            #TODO:  i don't know yet, if i need to change -inf on some value
-            #if(math.isinf(c)):
+            # TODO:  i don't know yet, if i need to change -inf on some value
+            # if(math.isinf(c)):
             #    cost1[0, i] = float(-1 * sys.float_info.max)
 
         J = -1/m * np.sum(cost1)
@@ -68,13 +66,14 @@ class LogisticRegressionModel:
 
     def train(self):
         self.theta = np.random.random((self.num_of_param, 1))
+        #self.theta = np.array([[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]]).transpose()
         i = 0
         J = self.cost(self.trainSet, self.answerSet_train)
         while J > self.__border:
             J = self.cost(self.trainSet, self.answerSet_train)
             i = i+1
             self.theta = self.grad_desc(self.trainSet, self.answerSet_train)
-            if i%1000==0:
+            if i % 1000 == 0:
                 print(i)
                 print(J)
         print("Complete iterations!")
@@ -99,7 +98,6 @@ class LogisticRegressionModel:
 
         if parameters.__len__() == 4:
             self.set_size += self.testSet.shape[1]
-
 
     def calc(self, x):
         res = self.h(x)

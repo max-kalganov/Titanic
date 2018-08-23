@@ -62,6 +62,7 @@ def match_rows(row):
             rows_in_set['row_Embar'] = i
     return rows_in_set
 
+
 def median_empty_values_processing(data):
     temp = list(filter(None, data))
     temp = [float(i) for i in temp]
@@ -69,8 +70,9 @@ def median_empty_values_processing(data):
 
     for i, r in enumerate(data):
         if r == '':
-            data[i] = str(med)  # TODO: change this line
+            data[i] = str(med)
     return data
+
 
 def preprocessing(reader, arg): # this function is made exclusively for task
 
@@ -136,12 +138,12 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         answerSet_test = np.array(answerSet[trainSet_size:])
         answerSet_test = answerSet_test.reshape(len(answerSet_test), 1)
 
-        return trainSet.astype(float), answerSet_train.astype(float), testSet.astype(float), answerSet_test.astype(float)
+        return SQR(trainSet.astype(float)), answerSet_train.astype(float), SQR(testSet.astype(float)), answerSet_test.astype(float)
 
     elif arg == "tf":
-        return trainSet.astype(float), answerSet_train.astype(float)
+        return SQR(trainSet.astype(float)), answerSet_train.astype(float)
     else:
-        return trainSet.astype(float), p_id
+        return SQR(trainSet.astype(float)), p_id
 
 
 def postprocessing(person_id, answer):  # this function is made exclusively for task
@@ -155,3 +157,7 @@ def postprocessing(person_id, answer):  # this function is made exclusively for 
     data = np.row_stack((person_id, temp))
 
     return data.transpose()
+
+
+def SQR(DataVec):
+    return np.concatenate((DataVec, np.multiply(DataVec, DataVec)))
