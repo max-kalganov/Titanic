@@ -127,7 +127,11 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     answerSet = np.array(answerSet).astype(float)
     answerSet = answerSet.reshape(len(answerSet),1)
     dataSet = (dataSet - dataSet.min(axis=1))/(dataSet.max(axis=1) - dataSet.min(axis=1))
-    dataSet = SQR(dataSet)
+
+    temp = dataSet
+    dataSet = np.concatenate((dataSet, SQR(dataSet)))
+    dataSet = np.concatenate((dataSet, CUBE(temp)))
+
 
     num_of_params, trainSet_size = dataSet.shape
 
@@ -164,4 +168,8 @@ def postprocessing(person_id, answer):  # this function is made exclusively for 
 
 
 def SQR(DataVec):
-    return np.concatenate((DataVec, np.multiply(DataVec, DataVec)))
+    return np.multiply(DataVec, DataVec)
+
+
+def CUBE(DataVec):
+    return np.multiply(DataVec,np.multiply(DataVec, DataVec))
