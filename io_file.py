@@ -69,13 +69,6 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     dataSet = []
     answerSet = []
 
-    answerSet_train = None
-    answerSet_test = None
-
-    width = 0
-    length = 0
-    row = []
-
     # correct all misses in data and cut answerSet
     rows_in_set = {}
 
@@ -141,12 +134,14 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         return trainSet.astype(float), p_id
 
 
-def postprocessing(person_id, answer): # this function is made exclusively for task
-    print(person_id)
-    print(answer)
-    #person_id = person_id.astype(str)
-    answer = answer.astype(str)
-    #person_id = np.insert(person_id, 0, "PassengerId")
+def postprocessing(person_id, answer):  # this function is made exclusively for task
+    person_id = np.array(person_id)
+    answer = answer.astype(int).astype(str)
     answer = np.insert(answer, 0, "Survived")
-    data = np.row_stack((person_id, answer))
+    temp = []
+    for i, r in enumerate(answer.transpose().tolist()):
+        temp.append(r[0])
+
+    data = np.row_stack((person_id, temp))
+
     return data.transpose()
