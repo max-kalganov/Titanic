@@ -12,8 +12,9 @@ class LogisticRegressionModel:
 
     theta = []                  # the coefficients of the model
     __alpha = 0.01
+    __border = 0.4
     num_of_param = None
-    set_size = None
+    set_size = 0
 
     def set_alpha(self, new_value):
         self.__alpha = new_value
@@ -68,7 +69,7 @@ class LogisticRegressionModel:
     def train(self):
         self.theta = np.random.random((self.num_of_param, 1))
         i = 0
-        while self.cost(self.trainSet, self.answerSet_train) > 0.9:
+        while self.cost(self.trainSet, self.answerSet_train) > self.__border:
             i = i+1
             self.theta = self.grad_desc(self.trainSet, self.answerSet_train)
         print("Complete iterations!")
@@ -79,14 +80,21 @@ class LogisticRegressionModel:
     def check_correction(self, x, y):
         res = self.calc(x)
         print("number of right answers = ", y.size - np.sum(np.abs(res.transpose() - y)))
+        print("number of all answers = ", y.size)
 
     def __init__(self, parameters):
+
         if parameters.__len__() == 2:
             self.trainSet, self.answerSet_train = parameters
+
         if parameters.__len__() == 4:
             self.trainSet, self.answerSet_train, self.testSet, self.answerSet_test = parameters
+
         self.num_of_param, self.set_size = self.trainSet.shape
-        self.set_size += self.testSet.shape[1]
+
+        if parameters.__len__() == 4:
+            self.set_size += self.testSet.shape[1]
+
 
     def calc(self, x):
         res = self.h(x)
