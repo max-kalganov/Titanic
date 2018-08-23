@@ -12,7 +12,7 @@ class LogisticRegressionModel:
 
     theta = []                  # the coefficients of the model
     __alpha = 0.001
-    __border = 0.9
+    __border = 0.3
     num_of_param = None
     set_size = 0
 

@@ -106,6 +106,7 @@ def preprocessing(reader, arg): # this function is made exclusively for task
         else:
             row = median_empty_values_processing(row)
 
+
         dataSet.append(row)
 
     width = len(dataSet[rows_in_set["row_p_id"]])
@@ -121,29 +122,32 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     answerSet_train = None
     answerSet_test = None
 
-    trainSet_size = set_size
+    dataSet = np.matrix(dataSet).astype(float)
+    dataSet = dataSet.transpose()
+    answerSet = np.array(answerSet).astype(float)
+    answerSet = answerSet.reshape(len(answerSet),1)
+    dataSet = (dataSet - dataSet.min(axis=1))/(dataSet.max(axis=1) - dataSet.min(axis=1))
+    dataSet = SQR(dataSet)
+
+    num_of_params, trainSet_size = dataSet.shape
+
     if arg == "t":
         trainSet_size = int(0.7 * set_size)
-    trainSet = np.matrix(dataSet[:trainSet_size])
-    trainSet = trainSet.transpose()
+    trainSet = dataSet[:, :trainSet_size]
 
     if arg == "t" or arg == "tf":
-        answerSet_train = np.array(answerSet[:trainSet_size])
-        answerSet_train = answerSet_train.reshape(len(answerSet_train), 1)
+        answerSet_train = answerSet[:trainSet_size]
 
     if arg == "t":
-        testSet = np.matrix(dataSet[trainSet_size:])
-        testSet = testSet.transpose()
+        testSet = dataSet[:, trainSet_size:]
+        answerSet_test = answerSet[trainSet_size:]
 
-        answerSet_test = np.array(answerSet[trainSet_size:])
-        answerSet_test = answerSet_test.reshape(len(answerSet_test), 1)
-
-        return SQR(trainSet.astype(float)), answerSet_train.astype(float), SQR(testSet.astype(float)), answerSet_test.astype(float)
+        return trainSet, answerSet_train, testSet, answerSet_test
 
     elif arg == "tf":
-        return SQR(trainSet.astype(float)), answerSet_train.astype(float)
+        return trainSet, answerSet_train
     else:
-        return SQR(trainSet.astype(float)), p_id
+        return trainSet, p_id
 
 
 def postprocessing(person_id, answer):  # this function is made exclusively for task
