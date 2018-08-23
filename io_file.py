@@ -1,7 +1,7 @@
 import math
 import csv
 import numpy as np
-
+import statistics
 
 # arg = 'c'(set without answers)/ 't'(train and test sets)/ 'tf'(only train set)
 def read_csvfile(csv_path, arg):
@@ -62,6 +62,15 @@ def match_rows(row):
             rows_in_set['row_Embar'] = i
     return rows_in_set
 
+def median_empty_values_processing(data):
+    temp = list(filter(None, data))
+    temp = [float(i) for i in temp]
+    med = int(statistics.median(temp))
+
+    for i, r in enumerate(data):
+        if r == '':
+            data[i] = str(med)  # TODO: change this line
+    return data
 
 def preprocessing(reader, arg): # this function is made exclusively for task
 
@@ -76,9 +85,9 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     p_id = []
 
     for row in reader:
+
         if first_row:
             rows_in_set = match_rows(row)
-            first_row = False
 
         row[rows_in_set["row_sex"]] = change_sym(row[rows_in_set["row_sex"]])
         row[rows_in_set["row_Embar"]] = change_sym(row[rows_in_set["row_Embar"]])
@@ -90,10 +99,11 @@ def preprocessing(reader, arg): # this function is made exclusively for task
                 answerSet.append(int(row[rows_in_set["row_surv"]]))
         p_id.append(row[rows_in_set["row_p_id"]])
         row = [row[rows_in_set["row_pclass"]]] + row[rows_in_set["row_sex"]:rows_in_set["row_ticket"]] + row[rows_in_set["row_Fare"]:]
+        if first_row:
+            first_row = False
+        else:
+            row = median_empty_values_processing(row)
 
-        for i, r in enumerate(row):
-            if r == '':
-                row[i] = '0'  # TODO: change this line
         dataSet.append(row)
 
     width = len(dataSet[rows_in_set["row_p_id"]])
