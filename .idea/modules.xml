@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Threshold-function-model/.idea/Threshold-function-model.iml" filepath="$PROJECT_DIR$/../Threshold-function-model/.idea/Threshold-function-model.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Titanic.iml" filepath="$PROJECT_DIR$/.idea/Titanic.iml" />
     </modules>
   </component>
