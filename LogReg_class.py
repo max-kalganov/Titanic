@@ -68,7 +68,7 @@ class LogisticRegressionModel:
         # TODO:  we can use regularization here
         return j
 
-    def step(self, num_of_iter=1):
+    def correction_theta(self, num_of_iter=1):
         for i in range(num_of_iter):
             self.theta = self.grad_desc(self.trainSet, self.answerSet_train)
 
@@ -76,18 +76,18 @@ class LogisticRegressionModel:
         self.theta = np.random.random((self.num_of_param, 1))
         # self.theta = np.array([[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]]).transpose()
         i = 0
-        j = self.cost(self.trainSet, self.answerSet_train)
-        while j > self.__border:
-            j = self.cost(self.trainSet, self.answerSet_train)
+        j_cost = self.cost(self.trainSet, self.answerSet_train)
+        while j_cost > self.__border:
+            j_cost = self.cost(self.trainSet, self.answerSet_train)
             i = i+1
-            self.step()
+            self.correction_theta()
             if i % 1000 == 0:
                 print(i)
-                print(j)
+                print(j_cost)
                 print(self.cost(self.testSet, self.answerSet_test))
         print("Complete iterations!")
         print("theta = \n", self.theta)
-        print("J = ", j)
+        print("J = ", j_cost)
         print("num of iterations = ", i)
 
     def check_correction(self, x, y):
@@ -115,7 +115,7 @@ class LogisticRegressionModel:
             self.trainSet = train_set_const[:, :cur_size]
             self.answerSet_train = answer_set_const[:cur_size]
 
-            self.step(num_of_iter)
+            self.correction_theta(num_of_iter)
 
             j_train = self.cost(self.trainSet, self.answerSet_train)
             errors_train.append(j_train)

@@ -159,7 +159,7 @@ def postprocessing(person_id, answer):  # this function is made exclusively for 
     answer = answer.astype(int).astype(str)
     answer = np.insert(answer, 0, "Survived")
     temp = []
-    for i, r in enumerate(answer.transpose().tolist()):
+    for r in answer.transpose().tolist():
         temp.append(r[0])
 
     data = np.row_stack((person_id, temp))
