@@ -3,9 +3,9 @@ import csv
 import numpy as np
 import statistics
 
+
 # arg = 'c'(set without answers)/ 't'(train and test sets)/ 'tf'(only train set)
 def read_csvfile(csv_path, arg):
-    ans = tuple()
     with open(csv_path, "r") as f_obj:
         reader = csv.reader(f_obj)
         ans = preprocessing(reader, arg)
@@ -27,7 +27,8 @@ def change_sym(sym):
             "C": '0',
             "Q": '1',
             "S": '2',
-            "" : '0' #TODO: this line isn't good
+             "": '0'
+            # TODO: this line isn't good
         }
         return dict.get(sym)
 
@@ -75,7 +76,7 @@ def median_empty_values_processing(data):
 
 
 def preprocessing(reader, arg): # this function is made exclusively for task
-
+    # Todo Добавить свободную переменную =1
     # creating variables
     dataSet = []
     answerSet = []
@@ -173,3 +174,10 @@ def SQR(DataVec):
 
 def CUBE(DataVec):
     return np.multiply(DataVec,np.multiply(DataVec, DataVec))
+
+
+def increasing_order(DataVec, deg=2, mode="pairwase"):
+    if mode == "pairwase":
+        pass
+    elif mode == "wpairwase":
+        func = np.dot

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from LogReg_class import LogisticRegressionModel
 
+
 def create_dataSet():
     dataSet = np.random.random((15,2))
 
@@ -38,7 +39,8 @@ dataSet = np.array([[0.08518521,0.45985378],
 
 answerSet = np.array([[1], [1], [1], [1], [0], [0], [0], [0], [1], [1], [0], [0], [0], [1], [1]])
 
-def train():
-    obj = LogisticRegressionModel((dataSet, answerSet), mode="d")
-    obj.train()
 
+def train():
+    obj = LogisticRegressionModel((dataSet.transpose(), answerSet), mode="d")
+    obj.train()
+train()

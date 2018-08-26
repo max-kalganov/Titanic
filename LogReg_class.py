@@ -2,7 +2,7 @@ import numpy as np
 import math
 import sys
 import matplotlib.pyplot as plt
-
+import time
 
 class LogisticRegressionModel:
     trainSet = None             # contains an array of training data
@@ -12,16 +12,23 @@ class LogisticRegressionModel:
     answerSet_test = []         #
 
     theta = []                  # the coefficients of the model
-    __alpha = 0.001
-    __border = 0.99
+    __alpha = 0
+    __border = 0
     num_of_param = None
     set_size = 0
+
 
     def set_alpha(self, new_value):
         self.__alpha = new_value
 
     def get_alpha(self):
         return self.__alpha
+
+    def set_border(self, new_value):
+        self.__border = new_value
+
+    def get_border(self):
+        return self.__border
 
     def h(self, x):
         return self.g(np.dot(self.theta.transpose(), x))
@@ -81,10 +88,13 @@ class LogisticRegressionModel:
             j_cost = self.cost(self.trainSet, self.answerSet_train)
             i = i+1
             self.correction_theta()
+            self.draw()
             if i % 1000 == 0:
                 print(i)
                 print(j_cost)
-                print(self.cost(self.testSet, self.answerSet_test))
+                if self.testSet is not None:
+                    print(self.cost(self.testSet, self.answerSet_test))
+
         print("Complete iterations!")
         print("theta = \n", self.theta)
         print("J = ", j_cost)
@@ -134,8 +144,27 @@ class LogisticRegressionModel:
         self.trainSet = train_set_const
         self.answerSet_train = answer_set_const
 
-    def __init__(self, parameters):
+    def realDraw(self):
+        temp = []
+        #print(self.answerSet_train)
+        for r in self.answerSet_train.tolist():
+            temp.append(r[0])
+        temp = np.asarray(temp)
+        #print(type(temp))
+        dataSet_1 = self.trainSet.transpose()[temp[:] == 1]
+        dataSet_0 = self.trainSet.transpose()[temp[:] == 0]
+        plt.plot(dataSet_0, "ob")
+        plt.plot(dataSet_1, "xr")
+        plt.plot([0, 2], [0, (self.theta[0]*2)/self.theta[1]])
+        plt.show()
+        time.sleep(0.1)
+        plt.close()
 
+
+
+    def __init__(self, parameters, border=0.5, alpha=0.01, mode="empty"):
+        self.__border = border
+        self.__alpha = alpha
         if parameters.__len__() == 2:
             self.trainSet, self.answerSet_train = parameters
 
@@ -147,11 +176,14 @@ class LogisticRegressionModel:
         if parameters.__len__() == 4:
             self.set_size += self.testSet.shape[1]
 
+        if mode == "d":
+            self.draw = self.realDraw
+
     def calc(self, x):
         res = self.h(x)
-        for i, r in enumerate(res.transpose()):
-            if r >= 0.5:
-                res[0, i] = 1
-            else:
-                res[0, i] = 0
+        res[res[:] >= 0.5] = 1
+        res[res[:] < 0.5] = 0
         return res
+
+    def draw(self):
+        pass
