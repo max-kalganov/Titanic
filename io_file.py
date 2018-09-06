@@ -132,6 +132,9 @@ def preprocessing(reader, arg): # this function is made exclusively for task
     temp = dataSet
     dataSet = np.concatenate((dataSet, SQR(dataSet)))
     dataSet = np.concatenate((dataSet, CUBE(temp)))
+    dataSet = np.concatenate((np.ones((1, set_size)), dataSet))
+
+    print("dataset shape = ",dataSet.shape)
 
 
     num_of_params, trainSet_size = dataSet.shape

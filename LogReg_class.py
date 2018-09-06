@@ -80,18 +80,18 @@ class LogisticRegressionModel:
             self.theta = self.grad_desc(self.trainSet, self.answerSet_train)
 
     def train(self):
-        self.theta = np.random.random((self.num_of_param, 1))
-        # self.theta = np.array([[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]]).transpose()
+        #self.theta = np.random.random((self.num_of_param, 1))
+        self.theta = np.array([[1.6, -2.7, -1.]]).transpose()
         i = 0
         j_cost = self.cost(self.trainSet, self.answerSet_train)
         while j_cost > self.__border:
             j_cost = self.cost(self.trainSet, self.answerSet_train)
             i = i+1
             self.correction_theta()
-            self.draw()
-            if i % 1000 == 0:
+            if i % 1 == 0:
                 print(i)
                 print(j_cost)
+                self.draw()
                 if self.testSet is not None:
                     print(self.cost(self.testSet, self.answerSet_test))
 
@@ -144,20 +144,35 @@ class LogisticRegressionModel:
         self.trainSet = train_set_const
         self.answerSet_train = answer_set_const
 
+    def y_func(self, x):
+        return float(-(self.theta[0] + self.theta[1]*x)/self.theta[2])
+
     def realDraw(self):
         temp = []
         #print(self.answerSet_train)
         for r in self.answerSet_train.tolist():
             temp.append(r[0])
         temp = np.asarray(temp)
-        #print(type(temp))
-        dataSet_1 = self.trainSet.transpose()[temp[:] == 1]
-        dataSet_0 = self.trainSet.transpose()[temp[:] == 0]
-        plt.plot(dataSet_0, "ob")
-        plt.plot(dataSet_1, "xr")
-        plt.plot([0, 2], [0, (self.theta[0]*2)/self.theta[1]])
+        print(self.theta)
+        dataSet_1 = self.trainSet[1:].transpose()[temp[:] == 1]
+        dataSet_0 = self.trainSet[1:].transpose()[temp[:] == 0]
+        dataSet_1 = dataSet_1.transpose()
+        dataSet_0 = dataSet_0.transpose()
+        print(dataSet_1.shape)
+
+        plt.plot(dataSet_0[0], dataSet_0[1], "ob")
+        plt.plot(dataSet_1[0], dataSet_1[1], "xr")
+        y = []
+        x = []
+        for i in range(0, 10):
+            x.append(i/10)
+            #y.append(i/10)
+            y.append(self.y_func(i/10))
+        print("x = ", x)
+        print("y = ", y)
+        plt.plot(x, y)
         plt.show()
-        time.sleep(0.1)
+        time.sleep(0.9)
         plt.close()
 
 
