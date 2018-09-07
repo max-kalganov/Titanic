@@ -80,15 +80,15 @@ class LogisticRegressionModel:
             self.theta = self.grad_desc(self.trainSet, self.answerSet_train)
 
     def train(self):
-        #self.theta = np.random.random((self.num_of_param, 1))
-        self.theta = np.array([[1.6, -2.7, -1.]]).transpose()
+        self.theta = np.random.random((self.num_of_param, 1))
+        #self.theta = np.array([[1.6, -2.7, -1.]]).transpose()
         i = 0
         j_cost = self.cost(self.trainSet, self.answerSet_train)
         while j_cost > self.__border:
             j_cost = self.cost(self.trainSet, self.answerSet_train)
             i = i+1
             self.correction_theta()
-            if i % 1 == 0:
+            if i % 100 == 0:
                 print(i)
                 print(j_cost)
                 self.draw()
